@@ -35,21 +35,65 @@ class ProfilePage extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            ProfileAvatar(), // Dipanggil dari custom widget
-            SizedBox(height: 20),
-            ProfileInfo(
-              nama: 'Chaerul Azriel Ardiansyah',
-              detail: 'NIM: 1124160129 | Kelas: TI24PSE1',
-            ), // Dipanggil dari custom widget dengan parameter
+          children: [
+            const ProfileAvatar(),
+            const SizedBox(height: 20),
+            const ProfileInfo(
+              name: 'Chaerul Azriel Ardiansyah',
+              role: 'NIM: 1124160129 | TI24PSE1\nTeknik Informatika - Global Institute',
+            ),
+            const SizedBox(height: 32),
+            ElevatedButton.icon(
+              onPressed: () {},
+              icon: const Icon(Icons.edit),
+              label: const Text('Edit Profil'),
+            ),
+            const SizedBox(height: 24),
+            
+            // --- FITUR BARU: BARIS STATISTIK MULAI DARI SINI ---
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              decoration: BoxDecoration(
+                color: Colors.blue[50], // Background kotak biru muda
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center, // Susun ke tengah
+                children: [
+                  Column(
+                    children: [
+                      const Text('15', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueAccent)),
+                      const SizedBox(height: 4),
+                      Text('Proyek', style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+                    ],
+                  ),
+                  const SizedBox(width: 24),
+                  Column(
+                    children: [
+                      const Text('1.2K', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueAccent)),
+                      const SizedBox(height: 4),
+                      Text('Followers', style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+                    ],
+                  ),
+                  const SizedBox(width: 24),
+                  Column(
+                    children: [
+                      const Text('42', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueAccent)),
+                      const SizedBox(height: 4),
+                      Text('Following', style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            // --- BATAS FITUR BARU ---
+
           ],
         ),
       ),
     );
   }
 }
-
-// --- CUSTOM WIDGET HASIL EXTRACT ---
 
 class ProfileAvatar extends StatelessWidget {
   const ProfileAvatar({super.key});
@@ -65,17 +109,17 @@ class ProfileAvatar extends StatelessWidget {
 }
 
 class ProfileInfo extends StatelessWidget {
-  final String nama;
-  final String detail;
+  final String name;
+  final String role;
 
-  const ProfileInfo({super.key, required this.nama, required this.detail});
+  const ProfileInfo({super.key, required this.name, required this.role});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Text(
-          nama,
+          name,
           style: const TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
@@ -83,7 +127,8 @@ class ProfileInfo extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(
-          detail,
+          role,
+          textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 16,
             color: Colors.grey[700],

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(const MyApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +15,21 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
       ),
-      home: const ProfilePage(), 
+      home: ProfilePage(), // Const dihapus karena ada list data di dalemnya
     );
   }
 }
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  ProfilePage({super.key});
+
+  // Data dummy list pengalaman (udah dikasih koma biar gak error)
+  final List<String> experiences = [
+    'Senior Backend Engineer - EDC Bank DKI',
+    'Backend & System Architect - Secure Payment EDC',
+    'Lead Developer - Aplikasi Sekurindo', 
+    'Backend Engineer - Pengembangan Sistem E-money', 
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +40,10 @@ class ProfilePage extends StatelessWidget {
         backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.white,
       ),
-      body: Center(
+      body: Padding(
+        // Padding dipindah ke sini biar listview gak nempel ke tepi layar
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const ProfileAvatar(),
             const SizedBox(height: 20),
@@ -49,9 +58,36 @@ class ProfilePage extends StatelessWidget {
               label: const Text('Edit Profil'),
             ),
             const SizedBox(height: 24),
-            
-            // Kodingan panjang tadi diganti jadi panggilan ini aja
             const ProfileStats(), 
+            const SizedBox(height: 24),
+            
+            // --- FITUR BARU MULAI DARI SINI ---
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Pengalaman Kerja',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const Divider(),
+            
+            // Wajib dibungkus Expanded biar UI nggak jebol (RenderFlex overflow)
+            Expanded(
+              child: ListView.builder(
+                itemCount: experiences.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    elevation: 2,
+                    margin: const EdgeInsets.symmetric(vertical: 6),
+                    child: ListTile(
+                      leading: const Icon(Icons.work, color: Colors.blueAccent),
+                      title: Text(experiences[index]),
+                    ),
+                  );
+                }
+              ),
+            ),
+            // --- BATAS FITUR BARU ---
           ],
         ),
       ),
@@ -103,8 +139,6 @@ class ProfileInfo extends StatelessWidget {
   }
 }
 
-// --- WIDGET STATISTIK BARU ---
-
 class ProfileStats extends StatelessWidget {
   const ProfileStats({super.key});
 
@@ -123,7 +157,7 @@ class ProfileStats extends StatelessWidget {
           SizedBox(width: 24),
           StatItem(count: '1.2K', label: 'Followers'),
           SizedBox(width: 24), 
-          StatItem(count: '42', label: 'Following'), // Angka 42 diubah jadi String
+          StatItem(count: '42', label: 'Following'), 
         ],
       ),
     );

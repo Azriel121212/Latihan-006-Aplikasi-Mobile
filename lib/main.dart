@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
       ),
-      home: ProfilePage(), // Const dihapus karena ada list data di dalemnya
+      home: ProfilePage(), 
     );
   }
 }
@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
 
-  // Data dummy list pengalaman (udah dikasih koma biar gak error)
   final List<String> experiences = [
     'Senior Backend Engineer - EDC Bank DKI',
     'Backend & System Architect - Secure Payment EDC',
@@ -41,7 +40,6 @@ class ProfilePage extends StatelessWidget {
         foregroundColor: Colors.white,
       ),
       body: Padding(
-        // Padding dipindah ke sini biar listview gak nempel ke tepi layar
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
@@ -61,7 +59,6 @@ class ProfilePage extends StatelessWidget {
             const ProfileStats(), 
             const SizedBox(height: 24),
             
-            // --- FITUR BARU MULAI DARI SINI ---
             const Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -71,23 +68,15 @@ class ProfilePage extends StatelessWidget {
             ),
             const Divider(),
             
-            // Wajib dibungkus Expanded biar UI nggak jebol (RenderFlex overflow)
             Expanded(
               child: ListView.builder(
                 itemCount: experiences.length,
                 itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 2,
-                    margin: const EdgeInsets.symmetric(vertical: 6),
-                    child: ListTile(
-                      leading: const Icon(Icons.work, color: Colors.blueAccent),
-                      title: Text(experiences[index]),
-                    ),
-                  );
+                  // Manggil custom widget biar rapi
+                  return ExperienceCard(experience: experiences[index]);
                 }
               ),
             ),
-            // --- BATAS FITUR BARU ---
           ],
         ),
       ),
@@ -191,6 +180,25 @@ class StatItem extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+// --- WIDGET LIST ITEM BARU ---
+class ExperienceCard extends StatelessWidget {
+  final String experience;
+  
+  const ExperienceCard({super.key, required this.experience});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 2,
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      child: ListTile(
+        leading: const Icon(Icons.work, color: Colors.blueAccent),
+        title: Text(experience),
+      ),
     );
   }
 }

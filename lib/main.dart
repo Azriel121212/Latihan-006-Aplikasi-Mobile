@@ -40,16 +40,16 @@ class ProfilePage extends StatelessWidget {
         foregroundColor: Colors.white,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
         child: Column(
           children: [
             const ProfileAvatar(),
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             const ProfileInfo(
               name: 'Chaerul Azriel Ardiansyah',
               role: 'NIM: 1124160129 | TI24PSE1\nTeknik Informatika - Global Institute',
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 24),
             ElevatedButton.icon(
               onPressed: () {},
               icon: const Icon(Icons.edit),
@@ -66,13 +66,12 @@ class ProfilePage extends StatelessWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
-            const Divider(),
+            const Divider(thickness: 1.5),
             
             Expanded(
               child: ListView.builder(
                 itemCount: experiences.length,
                 itemBuilder: (context, index) {
-                  // Manggil custom widget biar rapi
                   return ExperienceCard(experience: experiences[index]);
                 }
               ),
@@ -184,7 +183,6 @@ class StatItem extends StatelessWidget {
   }
 }
 
-// --- WIDGET LIST ITEM BARU ---
 class ExperienceCard extends StatelessWidget {
   final String experience;
   

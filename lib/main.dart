@@ -51,7 +51,13 @@ class ProfilePage extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Fitur edit belum aktif pada modul statis.'),
+                  )
+                );
+              },
               icon: const Icon(Icons.edit),
               label: const Text('Edit Profil'),
             ),

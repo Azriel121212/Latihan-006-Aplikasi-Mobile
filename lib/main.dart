@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Mengubah ProfilePage jadi StatefulWidget
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -29,7 +28,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  // Variabel state untuk nama user
   String userName = 'Chaerul Azriel Ardiansyah';
   
   final List<String> experiences = [
@@ -54,7 +52,6 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             const ProfileAvatar(),
             const SizedBox(height: 16),
-            // Mengirim variabel state ke custom widget
             ProfileInfo(
               name: userName,
               role: 'NIM: 1124160129 | TI24PSE1\nTeknik Informatika - Global Institute',
@@ -62,10 +59,33 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(height: 24),
             ElevatedButton.icon(
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Fitur edit belum aktif pada modul statis.'),
-                  )
+                TextEditingController nameController = TextEditingController(text: userName);
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Edit Nama Profil'),
+                      content: TextField(
+                        controller: nameController,
+                        decoration: const InputDecoration(hintText: "Masukkan nama baru"),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('Batal'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              userName = nameController.text;
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Simpan'),
+                        ),
+                      ],
+                    );
+                  },
                 );
               },
               icon: const Icon(Icons.edit),

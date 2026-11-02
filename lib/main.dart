@@ -15,14 +15,23 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
       ),
-      home: ProfilePage(), 
+      home: const ProfilePage(), 
     );
   }
 }
 
-class ProfilePage extends StatelessWidget {
-  ProfilePage({super.key});
+// Mengubah ProfilePage jadi StatefulWidget
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
 
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  // Variabel state untuk nama user
+  String userName = 'Chaerul Azriel Ardiansyah';
+  
   final List<String> experiences = [
     'Senior Backend Engineer - EDC Bank DKI',
     'Backend & System Architect - Secure Payment EDC',
@@ -45,8 +54,9 @@ class ProfilePage extends StatelessWidget {
           children: [
             const ProfileAvatar(),
             const SizedBox(height: 16),
-            const ProfileInfo(
-              name: 'Chaerul Azriel Ardiansyah',
+            // Mengirim variabel state ke custom widget
+            ProfileInfo(
+              name: userName,
               role: 'NIM: 1124160129 | TI24PSE1\nTeknik Informatika - Global Institute',
             ),
             const SizedBox(height: 24),
